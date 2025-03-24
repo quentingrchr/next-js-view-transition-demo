@@ -1,26 +1,36 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+
+/* 
+Blur animation for view transitions with tracked elements. Fast-moving solid elements can be visually jarring as the eye tries to track them. This creates a poor man's motion blur we can use to make these transitions smoother.
+*/
+@keyframes via-blur {
+  0% {
+    filter: blur(0px);
+  }
+  50% {
+    filter: blur(2px);
+  }
+  100% {
+    filter: blur(0px);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+
+/* using ::view-transition-image-pair and not ::view-transition-group to preserve the default animation's automatic scale and position morphing */
+::view-transition-image-pair(.via-blur) {
+  animation-name: via-blur;
+}
+
+
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    /* alternatively, you could design more subtle variants */
+    animation: none !important;
+  }
 }
