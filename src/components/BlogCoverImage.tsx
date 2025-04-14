@@ -1,8 +1,8 @@
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 import { unstable_ViewTransition as ViewTransition } from 'react';
 
 interface BlogCoverImageProps {
-  src: string;
+  src: StaticImageData;
   alt: string;
   id: number;
 }
